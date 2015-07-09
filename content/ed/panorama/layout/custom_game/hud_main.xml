@@ -1,0 +1,11 @@
+<root>
+  <styles>
+    <include src="file://{resources}/styles/dotastyles.css"/>
+    <include src="file://{resources}/styles/hud_main.css"/>
+  </styles>
+
+  <Panel class="DemoHud" hittest="false">
+
+  </Panel>  
+
+</root>

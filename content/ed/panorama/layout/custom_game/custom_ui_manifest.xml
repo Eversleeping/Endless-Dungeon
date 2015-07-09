@@ -1,0 +1,8 @@
+<root>
+	<scripts>
+        <include src="file://{resources}/scripts/custom_game/rpg_example_main.js" />
+    </scripts>
+	<Panel>
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/hud_main.xml" />
+	</Panel>
+</root>
