@@ -24,7 +24,7 @@ function BeginAttackState( targetEntIndex )
 			{
 				Game.PrepareUnitOrders( order );
 			}
-		}	
+		}
 	})();
 }
 
@@ -71,25 +71,21 @@ function OnLeftButtonPressed()
 		}
 	}
 
-	
-		Msg("mouseTarget found! "+ mouseTarget);
 
-	if (GameUI.IsShiftDown())
+	if ( mouseTarget ~= null )
 	{
-		Msg("Shift is down! ");
-		Msg(GameUI.GetCursorPosition());
+		OnPlayerLeftClickTarget(mouseTarget);
 	}
-	if (GameUI.IsControlDown())
+	else
 	{
-		Msg("Control is down! ");
-		Msg(GameUI.GetCursorPosition());
+		OnPlayerLeftClickAtPosition(GameUI.GetCursorPosition());
 	}
 }
 
 // Handle Right Button events
 function OnRightButtonPressed()
 {
-	
+
 }
 
 
