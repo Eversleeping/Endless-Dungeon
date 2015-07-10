@@ -55,11 +55,11 @@ UNKNOWN = ANY_STATE  ..  ANY
 function new( t )
     local self = {}
 
-    local state = t[ 1 ][ 1 ]           -- 当前状态，默认状态机第一个
-    local stt = {}                            -- 状态转换表
-    local silence = SILENCE   -- silence的话则不打印消息
-    local lock = false                  -- 锁定状态
-    local srt = ""                            -- 临时变量
+    local state = t[ 1 ][ 1 ]  -- 当前状态，默认状态机第一个
+    local stt = {} -- 状态转换表
+    local silence = SILENCE -- silence的话则不打印消息
+    local lock = false -- 锁定状态
+    local srt = "" -- 临时变量
 
     -- 获取当前状态
     function self:get() return state end
