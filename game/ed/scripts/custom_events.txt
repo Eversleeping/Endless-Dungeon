@@ -1,0 +1,11 @@
+"CustomEvents"
+{
+	"player_hero_first_spawn"
+	{
+		"PlayerID"		"short"
+	}
+	"player_update_selected_target"
+	{
+		"entindex"		"long"
+	}
+}

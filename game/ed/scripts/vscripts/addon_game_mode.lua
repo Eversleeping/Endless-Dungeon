@@ -2,7 +2,7 @@
 
 print( "Entering ed_game_mode's addon_game_mode.lua file." )
 
-
+_G.DEBUG = true
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 -- RPGExample class
 ------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -10,7 +10,8 @@ if CEDGameMode == nil then
 	_G.CEDGameMode = class({})
 end
 
-require("filters")
+require("events")
+require("test")
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Precache files and folders
@@ -40,30 +41,26 @@ function CEDGameMode:InitGameMode()
 	self._GameMode = GameRules:GetGameModeEntity()
 
 	self._GameMode:SetAnnouncerDisabled( true )
-	self._GameMode:SetContextThink( "CEDGameMode:GameThink", Dynamic_Wrap(CEDGameMode,"GameThink"), 0 )
-	self._GameMode:SetDamageFilter(Dynamic_Wrap(CEDGameMode, "DamageFilter"), self)
-
+	self._GameMode:SetStashPurchasingDisabled(true) -- 禁用储藏处
+	
 	GameRules:SetGoldPerTick( 0 )
 	GameRules:SetPreGameTime( 0 )
 	GameRules:SetHeroRespawnEnabled(false)
 	GameRules:SetCustomGameSetupTimeout( 0 ) -- skip the custom team UI with 0, or do indefinite duration with -1
-	GameRules:SetStashPurchasingDisabled(true) -- 禁用储藏处
 	
-	SendToServerConsole( "dota_camera_pitch_max 55" )
-	SendToServerConsole( "dota_camera_distance 1234" )
+	-- SendToServerConsole( "dota_camera_pitch_max 55" )
+	-- SendToServerConsole( "dota_camera_distance 1234" )
+
+	ListenToGameEvent("npc_spawned", Dynamic_Wrap(CEDGameMode, "OnNPCSpawned"), self)
+	
+	CustomGameEventManager:RegisterListener("player_update_selected_target", Dynamic_Wrap(CEDGameMode, "OnPlayerUpdateSelectedEntindex"))
+
+	Convars:RegisterCommand("script_test", Dynamic_Wrap(CEDGameMode, "ScriptTest"), "string helpText", 0)
 
 	self._tPlayerHeroInitialized = {}
+
 	for i = 0, DOTA_MAX_PLAYERS do
 		PlayerResource:SetCustomTeamAssignment( i, 2 ) -- put each player on Radiant team
 		self._tPlayerHeroInitialized[ i ] = false
 	end
-end
-
-
---------------------------------------------------------------------------------
--- Main Think
---------------------------------------------------------------------------------
-function CEDGameMode:GameThink()
-	local flThinkTick = 0.2
-	return flThinkTick
 end

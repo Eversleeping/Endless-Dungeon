@@ -11,44 +11,21 @@ function UpdateInventoryItem( itemSlot, item, queryUnit, parentPanel )
 
 function UpdateInventory()
 {
-	var stashPanel = $( "#stash_row" );
-	if ( !stashPanel )
-		return;
+	$.Msg("Creating item");
 
-	var firstRowPanel = $( "#inventory_row_1" );
-	if ( !firstRowPanel )
-		return;
-
-	var secondRowPanel = $( "#inventory_row_2" );
-	if ( !secondRowPanel )
-		return;
-
+	var panelRoot = $( "#inventory_items" );
+	
 	// Brute-force recreate the entire inventory UI for now
-	stashPanel.RemoveAndDeleteChildren();
-	firstRowPanel.RemoveAndDeleteChildren();
-	secondRowPanel.RemoveAndDeleteChildren();
+	panelRoot.RemoveAndDeleteChildren();
 
-	var queryUnit = Players.GetLocalPlayerPortraitUnit();
+	var hero = Players.GetPlayerHeroEntityIndex( Players.GetLocalPlayer() );
 
 	// Currently hardcoded: first 6 are inventory, next 6 are stash items
-	var DOTA_ITEM_STASH_MIN = 6;
-	var DOTA_ITEM_STASH_MAX = 12;
-	for ( var i = 0; i < DOTA_ITEM_STASH_MAX; ++i )
+	for ( var i = 0; i < 6; ++i )
 	{
-		var item = Entities.GetItemInSlot( queryUnit, i );
-	
-		if ( i >= DOTA_ITEM_STASH_MIN )
-		{
-			UpdateInventoryItem( i, item, queryUnit, stashPanel );
-		}
-		else if ( i > 2 )
-		{
-			UpdateInventoryItem( i, item, queryUnit, secondRowPanel );
-		}
-		else
-		{
-			UpdateInventoryItem( i, item, queryUnit, firstRowPanel );
-		}
+		var item = Entities.GetItemInSlot( hero, i );
+
+		UpdateInventoryItem( i, item, hero, panelRoot );
 	}
 }
 
@@ -58,8 +35,7 @@ function UpdateInventory()
 	GameEvents.Subscribe( "dota_inventory_item_changed", UpdateInventory );
 	GameEvents.Subscribe( "m_event_dota_inventory_changed_query_unit", UpdateInventory );
 	GameEvents.Subscribe( "m_event_keybind_changed", UpdateInventory );
-	GameEvents.Subscribe( "dota_player_update_selected_unit", UpdateInventory );
-	GameEvents.Subscribe( "dota_player_update_query_unit", UpdateInventory );
+	GameEvents.Subscribe( "player_hero_first_spawn", UpdateInventory );
 	
 	UpdateInventory(); // initial update
 })();

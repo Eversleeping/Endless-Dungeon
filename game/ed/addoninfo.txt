@@ -1,8 +1,8 @@
 "AddonInfo"
 {
 	"TeamCount"		"1"
-	"rpg_example"
+	"dungeon"
 	{
-		"MaxPlayers"		"4"
+		"MaxPlayers"		"10"
 	}
 }

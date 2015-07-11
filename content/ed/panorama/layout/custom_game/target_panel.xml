@@ -1,0 +1,20 @@
+<root>
+	<styles>
+		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
+		<include src="file://{resources}/styles/custom_game/target_panel.css" />
+	</styles>
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game/target_panel.js" />
+	</scripts>
+	<Panel class="TargetHealth Hidden" hittest="false">
+		<Label id="TargetName" text="#unknown" />
+		<Panel id="TargetHealthPanel">
+			<Panel id="TargetHealth" />
+			<Label id="TargetHealthLabel" text="0/0" />
+		</Panel>
+		<Panel id="TargetManaPanel">
+			<Panel id="TargetMana" />
+			<Label id="TargetManaLabel" text="0/0" />
+		</Panel>
+	</Panel>
+</root>

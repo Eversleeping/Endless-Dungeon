@@ -71,6 +71,8 @@ function ActivateAbility()
 {
 	var ability = $.GetContextPanel().GetAttributeInt( "ability", -1 );
 	var queryUnit = $.GetContextPanel().GetAttributeInt( "queryUnit", -1 );
+	var abilityTargetType = Abilities.GetAbilityTargetType(ability);
+	$.Msg("abilityTargetType" + abilityTargetType);
 	Abilities.ExecuteAbility( ability, queryUnit, false );
 }
 
@@ -95,16 +97,16 @@ function RebuildAbilityUI()
 {
 	var ability = $.GetContextPanel().GetAttributeInt( "ability", -1 );
 	var queryUnit = $.GetContextPanel().GetAttributeInt( "queryUnit", -1 );
-	var abilityLevelContainer = $( "#AbilityLevelContainer" );
-	abilityLevelContainer.RemoveAndDeleteChildren();
-	var currentLevel = Abilities.GetLevel( ability );
-	for ( var lvl = 0; lvl < Abilities.GetMaxLevel( ability ); lvl++ )
-	{
-		var levelPanel = $.CreatePanel( "Panel", abilityLevelContainer, "" );
-		levelPanel.AddClass( "LevelPanel" );
-		levelPanel.SetHasClass( "active_level", ( lvl < currentLevel ) );
-		levelPanel.SetHasClass( "next_level", ( lvl == currentLevel ) );
-	}
+	// var abilityLevelContainer = $( "#AbilityLevelContainer" );
+	// abilityLevelContainer.RemoveAndDeleteChildren();
+	// var currentLevel = Abilities.GetLevel( ability );
+	// for ( var lvl = 0; lvl < Abilities.GetMaxLevel( ability ); lvl++ )
+	// {
+	// 	var levelPanel = $.CreatePanel( "Panel", abilityLevelContainer, "" );
+	// 	levelPanel.AddClass( "LevelPanel" );
+	// 	levelPanel.SetHasClass( "active_level", ( lvl < currentLevel ) );
+	// 	levelPanel.SetHasClass( "next_level", ( lvl == currentLevel ) );
+	// }
 }
 
 (function()

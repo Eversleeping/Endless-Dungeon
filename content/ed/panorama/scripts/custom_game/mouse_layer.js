@@ -127,7 +127,7 @@ function OnRightButtonPressed()
 	};
 	Game.PrepareUnitOrders( order );
 }
-
+/*
 // Main mouse event callback
 GameUI.SetMouseCallback( function( eventName, arg ) {
 	var CONSUME_EVENT = true;
@@ -147,8 +147,8 @@ GameUI.SetMouseCallback( function( eventName, arg ) {
 		// Right-click is use ability #2
 		if ( arg === 1 )
 		{
-			OnRightButtonPressed();
-			return CONSUME_EVENT;
+			// OnRightButtonPressed();
+			return CONTINUE_PROCESSING_EVENT;
 		}
 	}
 	if ( eventName === "doublepressed" )
@@ -157,6 +157,6 @@ GameUI.SetMouseCallback( function( eventName, arg ) {
 	}
 	return CONTINUE_PROCESSING_EVENT;
 } );
-
+*/
 GameUI.SetCameraPitchMax( 55 );
 GameUI.SetCameraDistance( 1234 );

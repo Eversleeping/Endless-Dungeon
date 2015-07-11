@@ -1,0 +1,17 @@
+<root>
+	<styles>
+		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
+		<include src="file://{resources}/styles/custom_game/team_panel.css" />
+	</styles>
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game/team_panel.js" />
+	</scripts>
+	<Panel class="RaidFrame Hidden" hittest="false">
+		<Panel id="RaidFramePanel">
+			<Panel id="RaidFrameRow1" class="RaidFrameRow Hidden">
+			</Panel>
+			<Panel id="RaidFrameRow2" class="RaidFrameRow Hidden">
+			</Panel>
+		</Panel>
+	</Panel>
+</root>

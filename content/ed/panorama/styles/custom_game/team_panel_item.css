@@ -1,0 +1,112 @@
+.HealthPanelItemRoot
+{
+	width:100%;
+	height:72px;
+	border:3px #fa8477;
+	padding:2px;
+
+	pre-transform-scale2d: 1.0;
+	wash-color: transparent;
+}
+.HealthPanelItemRoot:hover
+{
+	pre-transform-scale2d: 1.01;
+	wash-color: #aaaaaa;
+}
+
+#HeroImage
+{
+	width:100%;
+	height:100%;
+}
+
+#BackGround
+{
+	width:100%;
+	height:100%;
+	z-index: -1;
+}
+
+#HealthAndMana
+{
+	width:100%;
+	height:100%;
+	z-index: 0;
+	flow-children: down;
+}
+
+#HealthPanel
+{
+	width:100%;
+	height:17px;
+	opacity: 0.7;
+	margin-top: 28px;
+	vertical-align: bottom;
+}
+#ManaPanel
+{
+	width:100%;
+	height:17px;
+	opacity: 0.7;
+	vertical-align: bottom;
+}
+
+#Health
+{
+	width:100%;
+	height:100%;
+
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #008846 ), to( #009948 ) );
+}
+
+#Mana
+{
+	width:100%;
+	height:100%;
+
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #004588 ), to( #004588 ) );
+}
+
+#HealthLabel
+{
+	width:100%;
+	text-align:center;
+	vertical-align: center;
+	font-weight: bold;
+	font-size: 14px;
+	color:#ffffff;
+	text-shadow: 1px 1px 2px 2 #000000;
+}
+#ManaLabel
+{
+	width:100%;
+	text-align:center;
+	vertical-align: center;
+	font-weight: bold;
+	font-size: 14px;
+	color:#ffffff;
+	text-shadow: 1px 1px 2px 2 #000000;
+}
+
+#SteamID
+{
+	margin-left: -10px;
+	margin-top:-5px;
+
+	min-width: 100px;
+	opacity:0.6;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #393939 ), to( #414849 ) );
+	border: 1px solid #ffffff05;
+	box-shadow: fill black 1px 1px 2px 2px;
+}
+
+#SteamID Label
+{
+	width:100%;
+	color: #bba995;
+ 	text-shadow: 1px 1px 2px 2 #000000;
+    font-size: 14px;
+
+	vertical-align: center;
+	text-align: center;
+}

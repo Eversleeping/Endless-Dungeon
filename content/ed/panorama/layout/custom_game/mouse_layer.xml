@@ -3,7 +3,7 @@
     <include src="file://{resources}/styles/hud_main.css"/>
   </styles>
   <scripts>
-    <include src="file://{resources}/scripts/custom_game/rpg_example_main.js" />
+    <include src="file://{resources}/scripts/custom_game/mouse_layer.js" />
   </scripts>
   <Panel class="DemoHud" hittest="false">
   </Panel>

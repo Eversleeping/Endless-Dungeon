@@ -2,22 +2,22 @@
 {
 	horizontal-align: center;
 	vertical-align: bottom;
-	margin-bottom: 220px;
+	margin-bottom: 20px;
 }
 
 #ability_list
 {
 	flow-children: right;
-	border: 2px solid black;
-	background-color: #272823;
+	/*border: 2px solid black;*/
+	/*background-color: #272823;*/
 }
 
 .AbilityPanel
 {
-	margin-left: 8px;
-	margin-right: 8px;
-	margin-top: 4px;
-	margin-bottom: 4px;
+	/*margin-left: 8px;*/
+	/*margin-right: 8px;*/
+	/*margin-top: 4px;*/
+	/*margin-bottom: 4px;*/
 }
 
 #ButtonAndLevel
@@ -29,7 +29,8 @@
 {
 	width: 80px;
 	height: 80px;
-	border: 2px solid black;
+	border: 4px solid black;
+	border-radius:20px;
 }
 
 #AbilityButton:hover
@@ -64,6 +65,7 @@
 {
 	margin: 2px;
 	border: 4px solid transparent;
+	border-radius:20px;
 }
 
 .auto_cast_enabled #AbilityStatusBorder

@@ -28,14 +28,19 @@
 #ManaCost
 {
 	color: #c0e8fb;
-    font-size: 14px;
+    font-size: 20px;
     font-weight: bold;
-	text-shadow: 0px 0px 6px 8 #245191;
-	margin-right: -2px;
-	margin-bottom: -4px;
+	text-shadow: 4px 4px 5px 20 #245191;
+	/*margin-right: -2px;*/
+	/*margin-bottom: -4px;*/
+	
+	/*background-color: gradient( linear, 0% 0%, 0% 100%, from( #3860AA ), to( #4470BB ) );*/
+	vertical-align: center;
+	text-align: center;
+	min-width: 30px;
 
-	vertical-align: bottom;
-	horizontal-align: right;
+	vertical-align: top;
+	horizontal-align: center;
 }
 
 .no_mana_cost #ManaCost
@@ -45,12 +50,14 @@
 
 #Hotkey
 {
-	margin-left: -4px;
+	margin-bottom: -10px;
+	
+	border-radius:8px;
 
-	vertical-align: top;
-	horizontal-align: left;
-	min-width: 18px;
-	min-height: 18px;
+	vertical-align: bottom;
+	horizontal-align: center;
+	min-width: 30px;
+	min-height: 30px;
 
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #393939 ), to( #414849 ) );
 	border: 1px solid #ffffff05;

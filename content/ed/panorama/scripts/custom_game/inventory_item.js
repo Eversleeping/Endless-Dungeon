@@ -6,41 +6,10 @@ function UpdateItem()
 	var queryUnit = $.GetContextPanel().GetAttributeInt( "queryUnit", -1 );
 	var itemName = Abilities.GetAbilityName( item );
 	var hotkey = Abilities.GetKeybind( item, queryUnit );
-	var chargeCount = 0;
-	var hasCharges = false;
-	var altChargeCount = 0;
-	var hasAltCharges = false;
-	
-	if ( Items.ShowSecondaryCharges( item ) )
-	{
-		// Ward stacks display charges differently depending on their toggle state
-		hasCharges = true;
-		hasAltCharges = true;
-		if ( Abilities.GetToggleState( item ) )
-		{
-			chargeCount = Items.GetCurrentCharges( item );
-			altChargeCount = Items.GetSecondaryCharges( item );
-		}
-		else
-		{
-			altChargeCount = Items.GetCurrentCharges( item );
-			chargeCount = Items.GetSecondaryCharges( item );
-		}
-	}
-	else if ( Items.ShouldDisplayCharges( item ) )
-	{
-		hasCharges = true;
-		chargeCount = Items.GetCurrentCharges( item );
-	}
 
-	$.GetContextPanel().SetHasClass( "show_charges", hasCharges );
-	$.GetContextPanel().SetHasClass( "show_alt_charges", hasAltCharges );
-	
 	$( "#HotkeyText" ).text = hotkey;
 	$( "#ItemImage" ).itemname = itemName;
 	$( "#ItemImage" ).contextEntityIndex = item;
-	$( "#ChargeCount" ).text = chargeCount;
-	$( "#AltChargeCount" ).text = altChargeCount;
 	
 	if ( item == -1 || Abilities.IsCooldownReady( item ) )
 	{
@@ -104,7 +73,7 @@ function RightClickItem()
 	// Not yet!
 	$.Msg( "Context menu not implemented." );
 }
-
+/*
 function OnDragEnter( a, draggedPanel )
 {
 	var item = $.GetContextPanel().GetAttributeInt( "item", -1 );
@@ -197,15 +166,16 @@ function OnDragEnd( panelId, draggedPanel )
 	$.GetContextPanel().RemoveClass( "dragging_from" );
 	return true;
 }
-
+*/
 (function()
 {
-	// Drag and drop handlers ( also requires 'draggable="true"' in your XML, or calling panel.SetDraggable(true) )
-	$.RegisterEventHandler( 'DragEnter', $.GetContextPanel(), OnDragEnter );
-	$.RegisterEventHandler( 'DragDrop', $.GetContextPanel(), OnDragDrop );
-	$.RegisterEventHandler( 'DragLeave', $.GetContextPanel(), OnDragLeave );
-	$.RegisterEventHandler( 'DragStart', $.GetContextPanel(), OnDragStart );
-	$.RegisterEventHandler( 'DragEnd', $.GetContextPanel(), OnDragEnd );
+	// Drag and drop handlers ( also requires 'draggable="true" in your XML, or calling panel.SetDraggable(true) )
+
+	// $.RegisterEventHandler( 'DragEnter', $.GetContextPanel(), OnDragEnter );
+	// $.RegisterEventHandler( 'DragDrop', $.GetContextPanel(), OnDragDrop );
+	// $.RegisterEventHandler( 'DragLeave', $.GetContextPanel(), OnDragLeave );
+	// $.RegisterEventHandler( 'DragStart', $.GetContextPanel(), OnDragStart );
+	// $.RegisterEventHandler( 'DragEnd', $.GetContextPanel(), OnDragEnd );
 
 	UpdateItem(); // initial update of dynamic state
 })();

@@ -6,6 +6,7 @@ function MakeAbilityPanel( abilityListPanel, ability, queryUnit )
 	abilityPanel.SetAttributeInt( "ability", ability );
 	abilityPanel.SetAttributeInt( "queryUnit", queryUnit );
 	abilityPanel.BLoadLayout( "file://{resources}/layout/custom_game/action_bar_ability.xml", false, false );
+	
 }
 
 function UpdateAbilityList()
@@ -16,7 +17,8 @@ function UpdateAbilityList()
 
 	abilityListPanel.RemoveAndDeleteChildren();
 	
-	var queryUnit = Players.GetLocalPlayerPortraitUnit();
+
+	var queryUnit = Players.GetPlayerHeroEntityIndex( Players.GetLocalPlayer() );
 	
 	for ( var i = 0; i < Entities.GetAbilityCount( queryUnit ); ++i )
 	{
@@ -33,9 +35,5 @@ function UpdateAbilityList()
 
 (function()
 {
-	GameEvents.Subscribe( "dota_portrait_ability_layout_changed", UpdateAbilityList );
-	GameEvents.Subscribe( "dota_player_update_selected_unit", UpdateAbilityList );
-	GameEvents.Subscribe( "dota_player_update_query_unit", UpdateAbilityList );
-	
-	UpdateAbilityList(); // initial update
+	GameEvents.Subscribe( "player_hero_first_spawn", UpdateAbilityList );
 })();
