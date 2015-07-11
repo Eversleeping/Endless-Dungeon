@@ -32,7 +32,7 @@
 		/**/
 	</script>
 	<Panel>
-		<!-- <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/mouse_layer.xml" /> -->
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/mouse_layer.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/action_bar.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/team_panel.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/target_panel.xml" />

@@ -5,7 +5,9 @@ function OnClickTeammate()
 	var id = $.GetContextPanel().GetAttributeInt("nPlayerID", -1);
 	var idx = Players.GetPlayerHeroEntityIndex( id );
 
-	GameEvents.SendCustomGameEventToServer( "player_update_selected_target", {entindex:idx} );
+	if ($.GetContextPanel().GetAttributeInt( "selected_index", -1 ) != idx )
+		GameEvents.SendCustomGameEventToServer( "player_update_selected_target", {entindex:idx} );
+	$.GetContextPanel().SetAttributeInt( "selected_index", idx );
 }
 
 var printed = false

@@ -158,5 +158,62 @@ GameUI.SetMouseCallback( function( eventName, arg ) {
 	return CONTINUE_PROCESSING_EVENT;
 } );
 */
-GameUI.SetCameraPitchMax( 55 );
-GameUI.SetCameraDistance( 1234 );
+
+function print(s){ $.Msg(s); }
+
+function ShowExtraPanels()
+{
+	print("OnShowExtraPanels");
+}
+
+(
+	function()
+	{
+		GameUI.SetMouseCallback( 
+			function(eventName, args)
+			{
+				if ( GameUI.GetClickBehaviors() !== CLICK_BEHAVIORS.DOTA_CLICK_BEHAVIOR_NONE )
+					return false;
+
+				var mouseEntities = GameUI.FindScreenEntities( GameUI.GetCursorPosition() );
+				var accurateEntities = mouseEntities.filter( function( e ) { return e.accurateCollision; } );
+				var idx = null;
+				if ( accurateEntities.length > 0 )
+				{
+					for ( var e of accurateEntities )
+					{
+						if (!Entities.IsItemPhysical( e.entityIndex ))
+						idx = e.entityIndex;
+					}
+				}
+
+
+
+				if ( eventName === "pressed" )
+				{
+					print("mouse down");
+					if (args === 1 )
+					{
+						if (GameUI.IsShiftDown())
+						{
+							ShowExtraPanels();
+							return true;
+						}
+					}
+					if (args === 0 && idx != null )
+					{
+						if (!Entities.IsItemPhysical( idx ))
+						{
+							if ($.GetContextPanel().GetAttributeInt( "selected_index", -1 ) != idx )
+								GameEvents.SendCustomGameEventToServer( "player_update_selected_target", {entindex:idx} );
+							$.GetContextPanel().SetAttributeInt( "selected_index", idx );
+							return true;
+						}
+					}
+				}
+
+				return false;
+			}
+		)
+	}
+)();
