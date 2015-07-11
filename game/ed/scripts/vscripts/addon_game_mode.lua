@@ -47,7 +47,8 @@ function CEDGameMode:InitGameMode()
 	GameRules:SetPreGameTime( 0 )
 	GameRules:SetHeroRespawnEnabled(false)
 	GameRules:SetCustomGameSetupTimeout( 0 ) -- skip the custom team UI with 0, or do indefinite duration with -1
-
+	GameRules:SetStashPurchasingDisabled(true) -- 禁用储藏处
+	
 	SendToServerConsole( "dota_camera_pitch_max 55" )
 	SendToServerConsole( "dota_camera_distance 1234" )
 

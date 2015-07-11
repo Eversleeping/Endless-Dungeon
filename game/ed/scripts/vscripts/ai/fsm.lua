@@ -39,9 +39,7 @@
         thisEntity.fsm:fire("event3") -- 由于锁定，不会有响应
         thisEntity.fsm:lock(false) -- 解除锁定
         thisEntity.fsm:fire("event3") -- 响应state3.event3，未找到，*.event3有效，切换state2，并作action1
-
 ]]
-
 
 --[ [  常量  ] ]
 SILENCE = false
@@ -73,7 +71,8 @@ function new( t )
             telllock()
             return
         end
-        tell(state, s) state = s
+        tellstatechange(state, s)
+        state = s
     end
 
     -- 无此状态的action
@@ -111,8 +110,7 @@ function new( t )
                 end
             end
         end
-        tellstatechange(state, act.newState)
-        state = act.newState
+        self:set(newState)
         if state.action then state.action() end
     end
 
