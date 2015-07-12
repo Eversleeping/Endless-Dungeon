@@ -1,0 +1,13 @@
+<root>
+	<styles>
+		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
+		<include src="file://{resources}/styles/custom_game/tooltip_layer.css" />
+	</styles>
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game/tooltip_layer.js" />
+	</scripts>
+	<Panel class="TooltipRoot" hittest="false">
+		<Label id="screen_center_timer" hittest="false" text="99" class="ScreenCenterTimer" />
+		<Label id="top_tooltip" hittest="false" text="top_tooltip" class="Toptooltip" />
+	</Panel>
+</root>

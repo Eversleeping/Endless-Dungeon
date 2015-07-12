@@ -37,9 +37,7 @@ end
 
 function CBossManager:OnPlayerVoteNextBoss(args)
 	print("PLAYER VOTED NEXT BOSS")
-	for k,v in pairs(args) do
-		print("OPVB =>"..k.."<=>"..v)
-	end
+
 	local self = CBossManager
 
 	if self.firstPlayerVoteTime == nil then self.firstPlayerVoteTime = GameRules:GetGameTime() end
@@ -51,7 +49,6 @@ function CBossManager:OnPlayerVoteNextBoss(args)
 	}
 
 	local apc = PlayerResource:GetPlayerCountForTeam(DOTA_TEAM_GOODGUYS)
-	print("voted player count", TableCount(self.vote), "apc", apc)
 
 	if (TableCount(self.vote) == apc or GameRules:GetGameTime() - self.firstPlayerVoteTime > 30) then
 		self.firstPlayerVoteTime = nil
@@ -80,8 +77,6 @@ function CBossManager:OnPlayerVoteNextBossFinished(vote)
 		end
 	end
 
-	print("sort result -> ", n)
-
 	local d = nil
 	local m = 0
 	for k,v in pairs(result_difficulty[n]) do
@@ -90,16 +85,25 @@ function CBossManager:OnPlayerVoteNextBossFinished(vote)
 			m = v
 		end
 	end
-	print("difficulty selection result -> ", d)
-
-	GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("boss_going_to_spawn"), function()
-		print("spawning boss")
-		CBossManager:SpawnBoss(n, d)
-	end, 1) --TODO
-
-	print("boss is going to spawn")
 
 	CustomGameEventManager:Send_ServerToAllClients("boss_going_to_spawn", {})
+
+	local spawn_delay = 10
+	Timers:CreateTimer( spawn_delay, function()
+		CBossManager:SpawnBoss(n,d)
+	end)
+	Timers:CreateTimer(1.0, function()
+		spawn_delay = spawn_delay - 1
+      	if spawn_delay > 0 then 
+      		CustomGameEventManager:Send_ServerToAllClients("update_screen_timer", {time = spawn_delay})
+      		return 1.0
+      	else
+      		CustomGameEventManager:Send_ServerToAllClients("destroy_screen_timer", {})
+      		return nil
+      	end
+      	return 1.0
+    end
+  )
 end
 
 return CBossManager

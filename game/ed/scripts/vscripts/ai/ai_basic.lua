@@ -53,7 +53,7 @@ function AIBASIC:init( unit )
 	-- init fsm
 	unit.__basicFSM = FSM:new(unit, {
 		{"waiting","on_get_hurt","state_fighting", unit.OnStartFight},
-		{"state_fighting","on_change_aggro_target","state_fighting", unit.OnChangeAttackTarget},
+		{"*","on_change_aggro_target","state_fighting", unit.OnChangeAttackTarget},
 		{"*","on_found_no_enemies","state_return",unit.OnBeginReturn},
 		{"*","on_go_too_far","state_return", unit.OnBeginReturn},
 		{"state_return","on_return_start_pos","waiting", nil}
@@ -63,19 +63,24 @@ function AIBASIC:init( unit )
 	HATRED:init(unit)
 	unit:SetContextThink(DoUniqueString("basic_ai_think"),
 		function()
-
+			--[[TODO,这部分AI的逻辑我还需要再进一步整理一下~]]
+			print("base ai thinking ------------------------------>")
 			if not IsValidEntity(unit) then
+				GameRules.ed_game_mode.__enemiesInFight[unit] = nil
 				return nil
 			end
 			if not unit:IsAlive() then 
+				GameRules.ed_game_mode.__enemiesInFight[unit] = nil
 				return nil 
 			end
 
 			if unit.__basicFSM:get() == "waiting" then
+				GameRules.ed_game_mode.__enemiesInFight[unit] = nil
 				local hp = unit:GetHealth()
-				local mhp = unit:GetMaxHealth()	
+				local mhp = unit:GetMaxHealth()
 				if hp < mhp then
 					unit.__basicFSM:fire("on_get_hurt")
+					GameRules.ed_game_mode.__enemiesInFight[unit] = true
 				end
 				return 0.1
 			end
@@ -87,6 +92,12 @@ function AIBASIC:init( unit )
 			end
 
 			local aggroUnit = unit:GetAggroTarget()
+
+			if aggroUnit ~= nil and unit.__basicFSM:get() == "waiting" then
+				unit.__basicFSM:set("state_fighting")
+				return 0.1
+			end
+
 			if unit:GetMaxHatredTarget() and aggroUnit ~= unit:GetMaxHatredTarget() then
 				local isChanneling = false
 				for i = 0, 15 do
@@ -112,8 +123,9 @@ function AIBASIC:init( unit )
 			else
 				local e = enemies[1]
 				if unit:GetHatred(e) == nil then
-					unit:ModifyHatred(, 0)
+					unit:ModifyHatred(e, 0)
 				end
+				return 0.1
 			end
 
 			return 0.1

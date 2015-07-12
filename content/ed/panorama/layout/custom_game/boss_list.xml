@@ -12,8 +12,6 @@
 		</Panel>
 		
 		<Image src="file://{images}/custom_game/boss_arthas.png" class="BackGroundImage ForCompile" />
-		<Panel id="boss_spawn_count_down" hittest="false" class="Hidden" >
-			<Label text="99" id="boss_spawn_count_down_text" hittest="false" />
-		</Panel>
+		
 	</Panel>
 </root>

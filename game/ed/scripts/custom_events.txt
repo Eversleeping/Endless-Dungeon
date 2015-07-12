@@ -27,4 +27,16 @@
 	{
 	
 	}
+	"fight_end"
+	{
+	
+	}
+	"update_screen_timer"
+	{
+		"time"		"short"
+	}
+	"destroy_screen_timer"
+	{
+	
+	}
 }

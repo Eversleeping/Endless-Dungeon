@@ -11,6 +11,7 @@ if CEDGameMode == nil then
 end
 
 require("utility_functions")
+require("library.timers")
 require("events")
 require("test")
 require("boss")
@@ -62,16 +63,37 @@ function CEDGameMode:InitGameMode()
 	Convars:RegisterCommand("script_test", Dynamic_Wrap(CEDGameMode, "ScriptTest"), "string helpText", 0)
 
 	self._tPlayerHeroInitialized = {}
+	self.__enemiesInFight = {}
+	self.nCountDown = -1
 
 	for i = 0, DOTA_MAX_PLAYERS do
 		PlayerResource:SetCustomTeamAssignment( i, 2 ) -- put each player on Radiant team
 		self._tPlayerHeroInitialized[ i ] = false
+		local player = PlayerResource:GetPlayer(i)
+		if player then 
+			table.insert(self.__all_players_list__, player)
+		end
 	end
 	
 	CBossManager:init()
 	CustomGameEventManager:RegisterListener("player_vote_next_boss", Dynamic_Wrap(CBossManager, "OnPlayerVoteNextBoss"))
 	CustomGameEventManager:RegisterListener("client_query_boss_list", Dynamic_Wrap(CBossManager, "OnClientQueryBossList"))
 
+	--[[ BOSSES FILES GOES BELOW ]]
 	print("BEGIN TO LOAD BOSS")
 	require("bosses.arthas")
+
+	Timers:CreateTimer(1, function()
+		if TableCount(self.__enemiesInFight) <= 0 and self.__inFight then
+			CustomGameEventManager:Send_ServerToAllClients("fight_end", {})
+			self.__inFight = false
+		else
+			print("Fight detector , enemies in fight counts => ", TableCount(self.__enemiesInFight))
+			self.__inFight = false
+		end
+		if TableCount(self.__enemiesInFight) > 0 then
+			self.__inFight = true
+		end 
+		return 1
+	end)
 end

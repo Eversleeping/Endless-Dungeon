@@ -28,7 +28,7 @@ function HATRED:init(unit)
 			unit.hatred[target] = 0
 		end
 		local r = unit.hatred[target] + amount
-		print("modify hatred " .. target:GetUnitName() .. " -to-->"..unit:GetUnitName() .. ", from ", unit.hatred[target], "==>", r)
+		-- print("modify hatred " .. target:GetUnitName() .. " -to-->"..unit:GetUnitName() .. ", from ", unit.hatred[target], "==>", r)
 		unit.hatred[target] = r
 	end
 

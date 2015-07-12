@@ -15,7 +15,6 @@ function CEDGameMode:OnNPCSpawned( event )
 	end
 
 	if hSpawnedUnit:GetTeamNumber() == DOTA_TEAM_BADGUYS then
-		print("DIRE UNIT SPAWNED, INITING AI")
 		AIBASIC:init(hSpawnedUnit)
 	end
 end
