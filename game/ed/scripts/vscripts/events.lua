@@ -1,17 +1,22 @@
 --[[ Events ]]
 
+require("ai.ai_basic")
+
 --------------------------------------------------------------------------------
 -- GameEvent: OnNPCSpawned
 --------------------------------------------------------------------------------
 function CEDGameMode:OnNPCSpawned( event )
-
-	print("CEDGameMode:OnNPCSpawned( event )")
 
 	hSpawnedUnit = EntIndexToHScript( event.entindex )
 
 	if hSpawnedUnit:IsOwnedByAnyPlayer() and hSpawnedUnit:IsRealHero() then
 		local hPlayerHero = hSpawnedUnit
 		self._GameMode:SetContextThink( "self:Think_InitializePlayerHero", function() return self:Think_InitializePlayerHero( hPlayerHero ) end, 0 )
+	end
+
+	if hSpawnedUnit:GetTeamNumber() == DOTA_TEAM_BADGUYS then
+		print("DIRE UNIT SPAWNED, INITING AI")
+		AIBASIC:init(hSpawnedUnit)
 	end
 end
 
@@ -42,11 +47,9 @@ function CEDGameMode:Think_InitializePlayerHero( hPlayerHero )
 	end
 
 	if self._tPlayerHeroInitialized[ nPlayerID ] == false then
-		hPlayerHero:AddItem( CreateItem( "item_flask", nil, nil ) )
-		hPlayerHero:AddItem( CreateItem( "item_blink", nil, nil ) )
-		hPlayerHero:AddItem( CreateItem( "item_blink", nil, nil ) )
-		hPlayerHero:AddItem( CreateItem( "item_blink", nil, nil ) )
-		hPlayerHero:AddItem( CreateItem( "item_blink", nil, nil ) )
+		--[[
+			TODO: 改成天赋系统
+		]]
 		hPlayerHero:AddItem( CreateItem( "item_blink", nil, nil ) )
 		self._tPlayerHeroInitialized[ nPlayerID ] = true
 	end

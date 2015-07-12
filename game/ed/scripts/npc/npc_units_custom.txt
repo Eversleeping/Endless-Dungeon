@@ -28,12 +28,109 @@
 	{
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/heroes/abaddon/abaddon.vmdl"
-		"Ability1"					""
-		"Ability2"					""
-		"Ability3"					""
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
-		"BountyXP"					"0"
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
-		"StatusHealth"				"5000"
+		"SoundSet"					"Nian"					// Name of sound set.
+		"ModelScale"					"2"
+		"Level"						"7"
+		"IsAncient"					"1"
+		"ConsideredHero"			"1"
+				
+		// Abilities
+		//----------------------------------------------------------------
+		"AbilityLayout"				"6"
+		"Ability1"					""	// Ability 1.
+		"Ability2"					""							// Ability 2.
+		"Ability3"					""							// Ability 3.
+		"Ability4"					""							// Ability 4.
+		"Ability5"					""							// Ability 5.
+		"Ability6"					""				// Ability 6 - Extra.
+		"Ability7"					""						// Ability 7 - Extra.
+		"Ability8"					""					// Ability 8 - Extra.
+		"Ability9"					""						
+		"Ability10"					""
+		"Ability11"					""
+		"Ability12"					""
+		"Ability13"					""
+		"Ability14"					""
+		"Ability15"					""
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"			// Physical protection.
+		"MagicalResistance"			"0"									// Magical protection (percentage).
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"65"		// Damage range min.
+		"AttackDamageMax"			"65"		// Damage range max.
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"1"			// Speed of attack.
+		"AttackAnimationPoint"		"0.3"		// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"150"		// Range within a target can be acquired.
+		"AttackRange"				"128"		// Range within a target can be attacked.
+		"ProjectileModel"			"ranged_goodguy" // Particle system model for projectile.
+		"ProjectileSpeed"			"1000"		// Speed of projectile.
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"0"		// Experience earn.
+		"BountyGoldMin"				"0"		// Gold earned min.
+		"BountyGoldMax"				"0"		// Gold earned max.
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"			// Hull type used for navigation/locomotion.
+		"RingRadius"				"110"
+		"HealthBarOffset"			"400"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"			// Type of locomotion - ground, air
+		"MovementSpeed"				"475"		// Speed
+		"MovementTurnRate"			"1.0"		// Turning rate.
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"750000"		// Base health.
+		"StatusHealthRegen"			"2"		// Health regeneration rate.
+		"StatusMana"				"5000"		// Base mana.
+		"StatusManaRegen"			"20"		// Mana regeneration rate.
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"99999"		// Range of vision during day light.
+		"VisionNighttimeRange"		"99999"		// Range of vision at night time.
+
+		// Inventory
+		//----------------------------------------------------------------
+		"HasInventory"				"1"
+
+		"ParticleFile"				"particles/units/heroes/hero_batrider.pcf"
+
+		// Creature Data
+		//----------------------------------------------------------------------------------------------------------------------
+		"Creature"
+		{
+			"CanRespawn"				"0"
+			"ShouldDoFlyHeightVisual"	"0"
+			
+			"EquippedItems"
+			{
+				"Gem"
+				{
+					"Item"					"item_gem"
+				}
+			}
+		
+			"DisableResistance"			"100.0"
+
+			"AttachWearables"
+			{
+				"Wearable1" { "ItemDef"	"6410"}
+				"Wearable2" { "ItemDef"	"5398"}
+				"Wearable3" { "ItemDef"	"6408"}
+				"Wearable4" { "ItemDef"	"7312"}
+			}
+		}
 	}
 }

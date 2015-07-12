@@ -64,36 +64,36 @@ CBossManager:RegisterBoss("boss_arthas", {
 		-- 初始化BOSS数据
 		boss.data = {}
 	
-		-- phase 1 abilities
+		-- 阶段1技能 phase1
 		boss.Ability_call_xuejiangshi = boss:FindAbilityByName("arthas_call_xuejiangshi") -- 召唤蹒跚的血僵尸 1
 		boss.Ability_call_shishigui = boss:FindAbilityByName("arthas_call_shishigui") -- 召唤食尸鬼苦工 2
 		boss.Ability_siqu = boss:FindAbilityByName("arthas_siqu") -- 死疽 3
 
-		-- phase 1-2 abilities
+		-- 转阶段阶段技能 phase1-2 phase2-3
 		boss.Ability_lengku_handong = boss:FindAbilityByName("arthas_lengku_handong") -- 冷酷寒冬 4
 		boss.Ability_baoshouzhemo = boss:FindAbilityByName("arthas_baoshouzhemo") -- 饱受折磨 5
 		boss.Ability_call_hanbingqiuti = boss:FindAbilityByName("arthas_call_hanbingqiuti") -- 召唤寒冰球体 6
 		boss.Ability_call_kuangnuguihun = boss:FindAbilityByName("arthas_call_kuangnuguihun") -- 召唤狂怒鬼魂 7
 
-		-- phase 2 abilities
+		-- 阶段2技能 phase2
 		boss.Ability_jisheng = boss:FindAbilityByName("arthas_jisheng") -- 寄生 8
 		boss.Ability_linghunshouge = boss:FindAbilityByName("arthas_linghunshouge") -- 灵魂收割 9
 		boss.Ability_wuran = boss:FindAbilityByName("arthas_wuran") -- 污染 10
 		boss.Ability_call_huaerqi = boss:FindAbilityByName("arthas_call_huaerqi") -- 召唤华尔琪 11
 
-		-- phase 3 abilities
+		-- 阶段3技能 phase 3
 		boss.Ability_shougelinghun = boss:FindAbilityByName("arthas_shougelinghun") -- 收割灵魂 12
 		boss.Ability_call_beilielinghun = boss:FindAbilityByName("arthas_call_beilielinghun") -- 召唤卑劣灵魂 13
 
 		boss.FSM = {}
 		local CFSM = require("ai.fsm")
 		boss.FSM.n = CFSM:new(boss, {
-			{"waiting","on_boss_get_hurt","phase1",OnFightStart},
-			{"*","on_health_below_70","phase12",OnEnterPhase12},
-			{"phase12","on_time_limit","phase2",OnEnterPhase2},
-			{"*","on_health_below_40","phase23",OnEnterPhase23},
-			{"phase23","on_time_limit","phase3",OnEnterPhase3},
-			{"*","on_health_below_10","end",OnEnd}
+			{"waiting","on_boss_get_hurt","phase1",OnFightStart}, -- 当受到伤害则触发进入战斗
+			{"*","on_health_below_70","phase12",OnEnterPhase12},  -- 当血量低于70%转入阶段1-2过渡
+			{"phase12","on_time_limit","phase2",OnEnterPhase2},   -- 阶段1-2过渡，当时间结束转入阶段2
+			{"*","on_health_below_40","phase23",OnEnterPhase23},  -- 当血量低于40%转入阶段23
+			{"phase23","on_time_limit","phase3",OnEnterPhase3},   -- 阶段2-3过渡，当时间结束转入阶段3
+			{"*","on_health_below_10","end",OnEnd}				  -- 血量低于10%，战斗结束
 		})
 		boss.FSM.h = boss.FSM.n
 		boss.fsm = boss.FSM[difficulty]

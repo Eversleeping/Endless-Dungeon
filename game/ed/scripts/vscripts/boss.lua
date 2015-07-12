@@ -95,7 +95,7 @@ function CBossManager:OnPlayerVoteNextBossFinished(vote)
 	GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("boss_going_to_spawn"), function()
 		print("spawning boss")
 		CBossManager:SpawnBoss(n, d)
-	end, 10)
+	end, 1) --TODO
 
 	print("boss is going to spawn")
 
