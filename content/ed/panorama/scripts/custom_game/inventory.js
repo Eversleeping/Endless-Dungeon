@@ -11,8 +11,6 @@ function UpdateInventoryItem( itemSlot, item, queryUnit, parentPanel )
 
 function UpdateInventory()
 {
-	$.Msg("Creating item");
-
 	var panelRoot = $( "#inventory_items" );
 	
 	// Brute-force recreate the entire inventory UI for now

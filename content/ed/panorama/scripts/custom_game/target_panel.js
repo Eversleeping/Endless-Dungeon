@@ -4,6 +4,11 @@ function UpdateTargetInfo()
 {
 	var idx = $.GetContextPanel().GetAttributeInt( "entindex", -1 );
 
+	if (!Entities.IsValidEntity( idx ) || !Entities.IsAlive( idx ))
+	{
+		return;
+	}
+
 	var h = Entities.GetHealth( idx );
 	var mh = Entities.GetMaxHealth( idx );
 	var m = Entities.GetMana( idx );
@@ -18,10 +23,18 @@ function UpdateTargetInfo()
 	var ht = sh + " / " + smh;
 	var mt = m + " / " + mm;
 
+
 	$("#TargetHealthLabel").text = ht;
 	$("#TargetManaLabel").text = mt;
-	$("#TargetHealth").style.width = h/mh * 100 + "%";
-	$("#TargetMana").style.width = m/mm * 100 + "%";
+
+	if (mh != 0 || h != 0 )
+	{ 
+		$("#TargetHealth").style.width = h/mh * 100 + "%";
+	}
+	if (m != 0 || mm != 0 )
+	{
+		$("#TargetMana").style.width = m/mm * 100 + "%";
+	}
 
 	$.Schedule( 0.1, UpdateTargetInfo );
 }

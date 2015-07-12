@@ -191,7 +191,6 @@ function ShowExtraPanels()
 
 				if ( eventName === "pressed" )
 				{
-					print("mouse down");
 					if (args === 1 )
 					{
 						if (GameUI.IsShiftDown())

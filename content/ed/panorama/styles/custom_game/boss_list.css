@@ -1,0 +1,197 @@
+.ForCompile
+{
+	visibility: collapse;
+}
+.BossListRoot
+{
+	width:100%;
+	height:100%;
+}
+
+.Hidden
+{
+	visibility: collapse;
+}
+
+#boss_selector_title
+{
+	color: #c0e8fb;
+    font-size: 35px;
+    font-weight: bold;
+	text-shadow: 4px 4px 5px 20 #245191;
+	/*margin-top: 10px;*/
+	margin-bottom: 10px;
+	
+	/*background-color: gradient( linear, 0% 0%, 0% 100%, from( #3860AA ), to( #4470BB ) );*/
+	vertical-align: center;
+	text-align: center;
+	min-width: 30px;
+
+	vertical-align: top;
+	horizontal-align: center;
+}
+
+.BossListPanel
+{
+	width:980px;
+	height:50%;
+
+	flow-children:down;
+	overflow: scroll;
+
+	vertical-align: center;
+	horizontal-align:center;
+	
+	border:3px solid red;
+	padding-top: 20px;
+	padding-bottom: 30px;
+
+}
+
+.BossListRow
+{
+	horizontal-align:center;
+	margin-top:10px;
+	width:100%;
+	height:150px;
+	tooltip-position: top;
+}
+
+.BackGroundImage
+{
+	horizontal-align:center;
+}
+
+.BossNameAndDifficulty
+{
+	flow-children:down;
+	padding:20px;
+}
+
+.BossNameLabel
+{
+	color: #c0e8fb;
+    font-size: 35px;
+    font-weight: bold;
+	text-shadow: 4px 4px 5px 20 #245191;
+	margin-top: 10px;
+	/*margin-bottom: -4px;*/
+	
+	/*background-color: gradient( linear, 0% 0%, 0% 100%, from( #3860AA ), to( #4470BB ) );*/
+	vertical-align: center;
+	text-align: center;
+	min-width: 30px;
+
+	vertical-align: top;
+	horizontal-align: center;
+}
+
+.Difficulty_Selector
+{
+	flow-children:right;
+	margin-top: 10px;
+	margin-left:50px;
+}
+
+
+
+.Difficulty_Selector RadioButton
+{
+	margin-left: 10px;
+	width:120px;
+	height:30px;
+	border:3px solid black;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #3860AA ), to( #4470BB ) );
+}
+
+.Difficulty_Selector RadioButton .RadioBox
+{
+	visibility: collapse;
+}
+
+.Difficulty_Selector RadioButton:hover
+{
+	border:4px solid white;
+}
+.Difficulty_Selector RadioButton:active
+{
+	border:5px solid white;
+}
+.Difficulty_Selector RadioButton:selected
+{
+	border:5px solid white;
+}
+.Difficulty_Selector Label
+{
+
+    font-size: 20px;
+    font-weight: bold;
+	/*text-shadow: 4px 4px 5px 20 #245191;*/
+	/*margin-right: -2px;*/
+	/*margin-bottom: -4px;*/
+	
+	vertical-align: center;
+	text-align: center;
+	min-width: 30px;
+
+	vertical-align: top;
+	horizontal-align: center;
+}
+
+#difficulty_normal
+{
+	vertical-align: center;
+	color: #c0e8fb;
+}
+
+#difficulty_hero
+{
+	vertical-align: center;
+	color: #c0e8fb;
+}
+
+
+/* COUNT DOWN*/
+#boss_spawn_count_down
+{
+	vertical-align: center;
+	horizontal-align:center;
+	width:500px;
+	height:500px;
+	opacity:0.3;
+
+}
+
+@keyframes 'CountDownPulse'
+{
+	0%
+	{
+		text-shadow: 0px 0px 100px 6.0 #AA191700;
+	}
+	
+	50%
+	{
+		text-shadow: 0px 0px 10px 6.0 #AA1917100;
+	}
+
+	100%
+	{
+		text-shadow: 0px 0px 100px 6.0 #AA191700;
+	}
+}
+
+#boss_spawn_count_down_text
+{
+	width:100%;
+	font-size: 330px;
+    font-weight: bold;
+    color:#AA1917dd;
+    text-align: center;
+    vertical-align: center;
+    horizontal-align:center;
+
+    animation-name: CountDownPulse;
+	animation-duration: 1.0s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+}

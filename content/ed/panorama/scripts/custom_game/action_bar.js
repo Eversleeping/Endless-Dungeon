@@ -20,12 +20,13 @@ function UpdateAbilityList()
 
 	var queryUnit = Players.GetPlayerHeroEntityIndex( Players.GetLocalPlayer() );
 	
-	for ( var i = 0; i < Entities.GetAbilityCount( queryUnit ); ++i )
+	for ( var i = 0; i < 15; ++i )
 	{
 		var ability = Entities.GetAbility( queryUnit, i );
 		if ( ability == -1 )
 			continue;
 
+		// ignore all hidden ability
 		if ( !Abilities.IsDisplayedAbility(ability) )
 			continue;
 		

@@ -1,1 +1,0 @@
-GameRules:GetGameModeEntity():SetUnseenFogOfWarEnabled()

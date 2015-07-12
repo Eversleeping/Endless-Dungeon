@@ -8,4 +8,23 @@
 	{
 		"entindex"		"long"
 	}
+	"register_new_boss"
+	{
+		"name"			"string"
+	}
+	"client_query_boss_list"
+	{
+	}
+	"player_vote_next_boss"
+	{
+		"boss_name"		"string"
+		"difficulty"	"string"
+	}
+	"player_slained_boss"
+	{
+	}
+	"boss_going_to_spawn"
+	{
+	
+	}
 }

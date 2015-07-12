@@ -1,4 +1,8 @@
 "addon"
 {
-
+	"boss_arthas"		"阿尔萨斯"
+	"Difficulty_Normal"		"普通模式"
+	"Difficulty_Hero"		"英雄模式"
+	"Boss_Selector_Title"	"选择挑战！"
+	"dont_click_too_fast"	"选好了就选好了，点点点点点，点你妹啊！"
 }

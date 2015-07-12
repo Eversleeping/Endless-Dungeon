@@ -10,14 +10,17 @@ if CEDGameMode == nil then
 	_G.CEDGameMode = class({})
 end
 
+require("utility_functions")
 require("events")
 require("test")
+require("boss")
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Precache files and folders
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 function Precache( context )
     GameRules.ed_game_mode = CEDGameMode()
+    GameRules.boss_manager = CBossManager()
     -- GameRules.ed_game_mode:PrecacheSpawners( context )
 
 	-- Particle systems to precache for onKill effects.
@@ -42,7 +45,8 @@ function CEDGameMode:InitGameMode()
 
 	self._GameMode:SetAnnouncerDisabled( true )
 	self._GameMode:SetStashPurchasingDisabled(true) -- 禁用储藏处
-	
+	self._GameMode:SetFogOfWarDisabled(true)
+
 	GameRules:SetGoldPerTick( 0 )
 	GameRules:SetPreGameTime( 0 )
 	GameRules:SetHeroRespawnEnabled(false)
@@ -63,4 +67,10 @@ function CEDGameMode:InitGameMode()
 		PlayerResource:SetCustomTeamAssignment( i, 2 ) -- put each player on Radiant team
 		self._tPlayerHeroInitialized[ i ] = false
 	end
+	CBossManager:init()
+	CustomGameEventManager:RegisterListener("player_vote_next_boss", Dynamic_Wrap(CBossManager, "OnPlayerVoteNextBoss"))
+	CustomGameEventManager:RegisterListener("client_query_boss_list", Dynamic_Wrap(CBossManager, "OnClientQueryBossList"))
+
+	print("BEGIN TO LOAD BOSS")
+	require("bosses.arthas")
 end
