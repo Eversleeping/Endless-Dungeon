@@ -17,7 +17,9 @@ function AIBASIC:init( unit )
 
 	function unit.OnChangeAttackTarget()
 		local maxHatredTarget = unit:GetMaxHatredTarget()
-		print("UNIT ",unit:GetUnitName()," CHANGE ATTACK TARGET [] from ", unit:GetAggroTarget() ,"=>", maxHatredTarget)
+		if not maxHatredTarget then return end
+
+		print("UNIT ",unit:GetUnitName()," CHANGE ATTACK TARGET from ", unit:GetAggroTarget() ,"=>", maxHatredTarget:GetUnitName())
 		unit:MoveToTargetToAttack( maxHatredTarget )
 	end
 
@@ -52,6 +54,7 @@ function AIBASIC:init( unit )
 	unit.__basicFSM = FSM:new(unit, {
 		{"waiting","on_get_hurt","state_fighting", unit.OnStartFight},
 		{"state_fighting","on_change_aggro_target","state_fighting", unit.OnChangeAttackTarget},
+		{"*","on_found_no_enemies","state_return",unit.OnBeginReturn},
 		{"*","on_go_too_far","state_return", unit.OnBeginReturn},
 		{"state_return","on_return_start_pos","waiting", nil}
 	})
@@ -98,6 +101,21 @@ function AIBASIC:init( unit )
 				unit.__basicFSM:fire("on_change_aggro_target")
 				return 2
 			end
+
+			if unit:GetAggroTarget() ~= nil then return end -- 只要有人打，那就打，反正都找不到最高仇恨了……，真没人打再往下……
+
+			local enemies = FindUnitsInRadius( unit:GetTeam(), unit:GetOrigin(), nil, 20000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false )
+			if #enemies == 0 then
+				print( "the unit found no enemies...!" )
+				unit.__basicFSM:fire("on_found_no_enemies")
+				return 0.5
+			else
+				local e = enemies[1]
+				if unit:GetHatred(e) == nil then
+					unit:ModifyHatred(, 0)
+				end
+			end
+
 			return 0.1
 		end,
 	0)

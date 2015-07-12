@@ -28,9 +28,9 @@
 	{
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/heroes/abaddon/abaddon.vmdl"
-		"SoundSet"					"Nian"					// Name of sound set.
-		"ModelScale"					"2"
-		"Level"						"7"
+		"SoundSet"					"Hero_Abaddon"					// Name of sound set.
+		"ModelScale"				"1.7"
+		"Level"						"1"
 		"IsAncient"					"1"
 		"ConsideredHero"			"1"
 				
@@ -61,8 +61,8 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"65"		// Damage range min.
-		"AttackDamageMax"			"65"		// Damage range max.
+		"AttackDamageMin"			"265"		// Damage range min.
+		"AttackDamageMax"			"265"		// Damage range max.
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"1"			// Speed of attack.
 		"AttackAnimationPoint"		"0.3"		// Normalized time in animation cycle to attack.

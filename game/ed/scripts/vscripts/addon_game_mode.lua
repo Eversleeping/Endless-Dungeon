@@ -56,7 +56,7 @@ function CEDGameMode:InitGameMode()
 	-- SendToServerConsole( "dota_camera_distance 1234" )
 
 	ListenToGameEvent("npc_spawned", Dynamic_Wrap(CEDGameMode, "OnNPCSpawned"), self)
-	
+
 	CustomGameEventManager:RegisterListener("player_update_selected_target", Dynamic_Wrap(CEDGameMode, "OnPlayerUpdateSelectedEntindex"))
 
 	Convars:RegisterCommand("script_test", Dynamic_Wrap(CEDGameMode, "ScriptTest"), "string helpText", 0)
@@ -67,6 +67,7 @@ function CEDGameMode:InitGameMode()
 		PlayerResource:SetCustomTeamAssignment( i, 2 ) -- put each player on Radiant team
 		self._tPlayerHeroInitialized[ i ] = false
 	end
+	
 	CBossManager:init()
 	CustomGameEventManager:RegisterListener("player_vote_next_boss", Dynamic_Wrap(CBossManager, "OnPlayerVoteNextBoss"))
 	CustomGameEventManager:RegisterListener("client_query_boss_list", Dynamic_Wrap(CBossManager, "OnClientQueryBossList"))
