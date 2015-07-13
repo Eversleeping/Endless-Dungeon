@@ -33,25 +33,8 @@ function HATRED:init(unit)
 		return unit.hatred[target]
 	end
 
-	function unit:ForceHatred(target, duration)
-		-- 禁止永久强制嘲讽
-		if not duration or type(duration) ~= "number" then return end
-
-		unit.forceHatredTarget = target
-
-		unit.forceHatredStartTime = GameRules:GetGameTime()
-		unit:SetContextThink(DoUniqueString("hatred_remove"), function()
-			if GameRules:GetGameTime() - unit.forceHatredStartTime >= duration then
-				unit.forceHatredTarget = nil
-				return nil
-			end
-			return 0.1
-		end, 0.1)
-	end
-
 	function unit:GetMaxHatredTarget()
-		return unit.forceHatredTarget or
-			unit:GetMaxHatredTargetWithoutForce()
+		return unit:GetMaxHatredTargetWithoutForce()
 	end
 
 	function unit:GetMaxHatredTargetWithoutForce()

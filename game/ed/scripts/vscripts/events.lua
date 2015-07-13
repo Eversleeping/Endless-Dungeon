@@ -64,6 +64,9 @@ end
 function CEDGameMode:OnPlayerUpdateSelectedEntindex(args)
 	print("OnPlayerUpdateSelectedEntindex")
 	local hPlayer = PlayerResource:GetPlayer(args.PlayerID)
+
+	hPlayer.__selectedEntityIndex = args.entindex
+
 	CustomGameEventManager:Send_ServerToPlayer(hPlayer, "player_update_selected_entindex", {entindex = args.entindex})
 end
 
