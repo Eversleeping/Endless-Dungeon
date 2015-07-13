@@ -3,18 +3,22 @@ if AIBASIC == nil then AIBASIC = class({}) end
 require("ai.fsm")
 require("ai.hatred")
 
-
 MAX_ROARM_DISTANCE = 2000
-
 LinkLuaModifier( "lm_take_no_damage", LUA_MODIFIER_MOTION_NONE )
 
 function AIBASIC:init( unit )
 	unit.spawnLocation = unit:GetAbsOrigin()
 
+	--=================================================================
+	-- 当单位开始进入战斗
+	--=================================================================
 	function unit.OnStartFight()
 		print(unit:GetUnitName(), "-> start fight against you ~ ~ ~")
 	end
 
+	--=================================================================
+	-- 切换攻击目标
+	--=================================================================
 	function unit.OnChangeAttackTarget()
 		local maxHatredTarget = unit:GetMaxHatredTarget()
 		if not maxHatredTarget then return end
@@ -23,6 +27,9 @@ function AIBASIC:init( unit )
 		unit:MoveToTargetToAttack( maxHatredTarget )
 	end
 
+	--=================================================================
+	-- 单位返回初始点
+	--=================================================================
 	function unit.OnBeginReturn()
 		print("Unit begin to return current state", unit.__fsm__:get())
 		unit.__fsm__:setlock(true)
@@ -61,6 +68,9 @@ function AIBASIC:init( unit )
 		end,0)
 	end
 
+	--=================================================================
+	-- FSM AI循环
+	--=================================================================
 	function unit:FSMThink( f, e )
 		if not (IsValidEntity(unit) and unit:IsAlive())then
 			return nil
@@ -78,6 +88,9 @@ function AIBASIC:init( unit )
 			local mhp = unit:GetMaxHealth()
 			if hp < mhp or aggroUnit ~= nil then
 				unit.__fsm__:fire("on_hurt")
+				if aggroUnit and unit:GetHatred(aggroUnit) == nil then
+					unit:ModifyHatred(aggroUnit, 0)
+				end
 				GameRules.ed_game_mode.__enemiesInFight[unit] = true
 			end
 			return 0.1
@@ -132,14 +145,17 @@ function AIBASIC:init( unit )
 		{"state_return","on_return_start_pos","waiting", nil}
 	})
 
-	unit.__fsm__:RegisterEventTrigger({
-		on_get_hurt = function(unit.__fsm__, unit)
-			if unit:GetHealth() ~= unit:GetMaxHealth() then return true end
-		end
-	})
-
 	-- init hatred
 	HATRED:init(unit)
 
+end
 
+-- 入口改为从KV入口，因为有的单位并不需要这个AI
+function Spawn( entityKeyValues, thisEntity )
+	AIBASIC:init( thisEntity )
+end
+
+-- 如果单位在自身AI之外，还需要其他AI，那么在他的SpawnAI中调用AIBASIC_InternalSpawn( thisEntity )
+function InternalSpawn(e)
+	AIBASIC:init( thisEntity )
 end

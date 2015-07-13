@@ -13,10 +13,6 @@ function CEDGameMode:OnNPCSpawned( event )
 		local hPlayerHero = hSpawnedUnit
 		self._GameMode:SetContextThink( "self:Think_InitializePlayerHero", function() return self:Think_InitializePlayerHero( hPlayerHero ) end, 0 )
 	end
-
-	if hSpawnedUnit:GetTeamNumber() == DOTA_TEAM_BADGUYS then
-		AIBASIC:init(hSpawnedUnit)
-	end
 end
 
 --------------------------------------------------------------------------------
@@ -28,13 +24,13 @@ function CEDGameMode:Think_InitializePlayerHero( hPlayerHero )
 	end
 
 	hPlayerHero.bInitialized = true
-	
+
 	local nPlayerID = hPlayerHero:GetPlayerOwnerID()
 	-- PlayerResource:SetCameraTarget( nPlayerID, hPlayerHero )
 	PlayerResource:SetOverrideSelectionEntity( nPlayerID, hPlayerHero )
 	PlayerResource:SetGold( nPlayerID, 0, true )
 	PlayerResource:SetGold( nPlayerID, 0, false )
-	
+
 	hPlayerHero:SetIdleAcquire( false )
 	hPlayerHero:SetAbilityPoints(0)
 
