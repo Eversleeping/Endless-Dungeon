@@ -38,5 +38,6 @@
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/target_panel.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/boss_list.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/inventory.xml" />
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/tooltip_layer.xml" />
 	</Panel>
 </root>
