@@ -11,9 +11,7 @@ LinkLuaModifier( "lm_damage_tracker", LUA_MODIFIER_MOTION_NONE )
 if _G.HATRED == nil then _G.HATRED = {} end
 
 function HATRED:init(unit)
-
 	print("initing hatred for unit", unit:GetUnitName())
-	
 	unit.hatred = {}
 
 	if not unit:HasModifier("lm_damage_tracker") then
@@ -28,7 +26,6 @@ function HATRED:init(unit)
 			unit.hatred[target] = 0
 		end
 		local r = unit.hatred[target] + amount
-		-- print("modify hatred " .. target:GetUnitName() .. " -to-->"..unit:GetUnitName() .. ", from ", unit.hatred[target], "==>", r)
 		unit.hatred[target] = r
 	end
 
@@ -36,26 +33,9 @@ function HATRED:init(unit)
 		return unit.hatred[target]
 	end
 
-	function unit:ForceHatred(target, duration)
-		-- 禁止永久强制嘲讽
-		if not duration or type(duration) ~= "number" then return end
-
-		unit.forceHatredTarget = target
-
-		unit.forceHatredStartTime = GameRules:GetGameTime()
-		unit:SetContextThink(DoUniqueString("hatred_remove"), function() 
-			if GameRules:GetGameTime() - unit.forceHatredStartTime >= duration then
-				unit.forceHatredTarget = nil
-				return nil
-			end
-			return 0.1
-		end, 0.1)
-	end
-
 	function unit:GetMaxHatredTarget()
-		return unit.forceHatredTarget or
-			unit:GetMaxHatredTargetWithoutForce()
-	end 
+		return unit:GetMaxHatredTargetWithoutForce()
+	end
 
 	function unit:GetMaxHatredTargetWithoutForce()
 		local m = nil
@@ -69,4 +49,38 @@ function HATRED:init(unit)
 		return TableFindKey(unit.hatred, m)
 	end
 
+	function unit:GetHatredByIndex( idx )
+		local t = {}
+		for k, v in pairs(unit.hatred) do
+			if ( (not IsValidEntity(k)) or (not  k:IsAlive() ) ) then
+				unit.hatred[k] = nil
+			else
+				table.insert(t, v)
+			end
+		end
+		table.sort(t, function(a,b) return a > b end)
+		local hbi = t[idx]
+		if hbi then
+			return TableFindKey(unit.hatred, hbi)
+		end
+
+		return nil
+	end
+
+	function unit:GetMinHatredTarget()
+		local t = {}
+		for k, v in pairs(unit.hatred) do
+			if ( (not IsValidEntity(k)) or (not  k:IsAlive() ) ) then
+				unit.hatred[k] = nil
+			else
+				table.insert(t, v)
+			end
+		end
+		table.sort(t)
+		local hbi = t[1]
+		if hbi then
+			return TableFindKey(unit.hatred, hbi)
+		end
+		return nil
+	end
 end

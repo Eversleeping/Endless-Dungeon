@@ -6,20 +6,18 @@ function CBossManager:init()
 	self.p = Entities:FindByName(nil, "boss_spawn_loc"):GetAbsOrigin()
 end
 
-function CBossManager:RegisterBoss(name, args )
+function CBossManager:RegisterBoss(name, isPlayable)
 	if self._Bosses == nil then self._Bosses = {} end
-	self._Bosses[name] = args
+	self._Bosses[name] = isPlayable
 end
 
 function CBossManager:SpawnBoss(name, difficulty)
-	print("on order spawn boss")
-	local boss = CreateUnitByNameAsync(name, self.p, true, nil, nil, DOTA_TEAM_BADGUYS, 
+	local boss = CreateUnitByNameAsync(name, self.p, true, nil, nil, DOTA_TEAM_BADGUYS,
 		function(unit)
 			print("boss created finished!", unit:GetUnitName())
 			unit.difficulty = difficulty
 			unit.isBoss = true
 			unit:SetForwardVector(Vector(0,-1,0))
-			self._Bosses[name].init(unit, difficulty) -- init boss data
 		end
 	)
 end
@@ -94,7 +92,7 @@ function CBossManager:OnPlayerVoteNextBossFinished(vote)
 	end)
 	Timers:CreateTimer(1.0, function()
 		spawn_delay = spawn_delay - 1
-      	if spawn_delay > 0 then 
+      	if spawn_delay > 0 then
       		CustomGameEventManager:Send_ServerToAllClients("update_screen_timer", {time = spawn_delay})
       		return 1.0
       	else

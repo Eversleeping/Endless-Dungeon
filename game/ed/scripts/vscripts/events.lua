@@ -13,10 +13,6 @@ function CEDGameMode:OnNPCSpawned( event )
 		local hPlayerHero = hSpawnedUnit
 		self._GameMode:SetContextThink( "self:Think_InitializePlayerHero", function() return self:Think_InitializePlayerHero( hPlayerHero ) end, 0 )
 	end
-
-	if hSpawnedUnit:GetTeamNumber() == DOTA_TEAM_BADGUYS then
-		AIBASIC:init(hSpawnedUnit)
-	end
 end
 
 --------------------------------------------------------------------------------
@@ -28,13 +24,13 @@ function CEDGameMode:Think_InitializePlayerHero( hPlayerHero )
 	end
 
 	hPlayerHero.bInitialized = true
-	
+
 	local nPlayerID = hPlayerHero:GetPlayerOwnerID()
 	-- PlayerResource:SetCameraTarget( nPlayerID, hPlayerHero )
 	PlayerResource:SetOverrideSelectionEntity( nPlayerID, hPlayerHero )
 	PlayerResource:SetGold( nPlayerID, 0, true )
 	PlayerResource:SetGold( nPlayerID, 0, false )
-	
+
 	hPlayerHero:SetIdleAcquire( false )
 	hPlayerHero:SetAbilityPoints(0)
 
@@ -68,20 +64,15 @@ end
 function CEDGameMode:OnPlayerUpdateSelectedEntindex(args)
 	print("OnPlayerUpdateSelectedEntindex")
 	local hPlayer = PlayerResource:GetPlayer(args.PlayerID)
+
+	hPlayer.__selectedEntityIndex = args.entindex
+
 	CustomGameEventManager:Send_ServerToPlayer(hPlayer, "player_update_selected_entindex", {entindex = args.entindex})
 end
 
+--[[
 function CEDGameMode:OnEntityKilled(args)
 	local ent = args.entindex_killed
 	local killer = args.entindex_attacker
-
-	if ent.isBoss then
-		print("A boss was killed , it called -> " .. ent:GetUnitName())
-		if CBossManager:HasNextBoss() then
-			FireGameEvent("player_slained_boss", {})
-			CustomNetTables:SetTableValue("slained_boss", ent:GetUnitName(), { difficulty = ent.difficulty })
-		else
-			GameRules:SetGameWinner(DOTA_TEAM_GOODGUYS)
-		end
-	end
 end
+--]]
