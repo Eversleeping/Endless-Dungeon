@@ -150,6 +150,15 @@ function FSM:new( e, t )
     -- 把所有的状态设定加进去
     this:add(t)
 
+    -- 在fsm中启动循环
+    e:SetContextThink(DoUniqueString("unit_fsm_think"), function()
+        if (not IsValidEntity(e)) or (not e:IsAlive()) then
+            return nil
+        else
+            return e:FSMThink( this , e )
+        end
+    end, 0)
+
     return this
 end
 

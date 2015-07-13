@@ -13,7 +13,7 @@ if _G.HATRED == nil then _G.HATRED = {} end
 function HATRED:init(unit)
 
 	print("initing hatred for unit", unit:GetUnitName())
-	
+
 	unit.hatred = {}
 
 	if not unit:HasModifier("lm_damage_tracker") then
@@ -43,7 +43,7 @@ function HATRED:init(unit)
 		unit.forceHatredTarget = target
 
 		unit.forceHatredStartTime = GameRules:GetGameTime()
-		unit:SetContextThink(DoUniqueString("hatred_remove"), function() 
+		unit:SetContextThink(DoUniqueString("hatred_remove"), function()
 			if GameRules:GetGameTime() - unit.forceHatredStartTime >= duration then
 				unit.forceHatredTarget = nil
 				return nil
@@ -55,7 +55,7 @@ function HATRED:init(unit)
 	function unit:GetMaxHatredTarget()
 		return unit.forceHatredTarget or
 			unit:GetMaxHatredTargetWithoutForce()
-	end 
+	end
 
 	function unit:GetMaxHatredTargetWithoutForce()
 		local m = nil
@@ -68,5 +68,7 @@ function HATRED:init(unit)
 		end
 		return TableFindKey(unit.hatred, m)
 	end
+
+
 
 end
