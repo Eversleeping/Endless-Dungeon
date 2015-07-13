@@ -56,6 +56,13 @@ function ShuffledList( orig_list )
     return result
 end
 
+function TableContains(t,val)
+    for _, v in pairs(t) do
+        if val == v then return true end
+    end
+    return false
+end
+
 function TableCount( t )
     local n = 0
     for _ in pairs( t ) do
@@ -104,4 +111,16 @@ end
 function SetTimer( cmdName, time )
     print( "Set the timer to: " .. time )
     nCOUNTDOWNTIMER = time
+end
+
+function cd2b(d)
+
+end
+
+function IsFacing(ea, eb)
+    local v = ea:GetForwardVector()
+    local oa = ea:GetAbsOrigin()
+    local ob = eb:GetAbsOrigin()
+    local d = (ob - oa)
+    return ( v.x * d.x + v.y * d.y ) > 0
 end

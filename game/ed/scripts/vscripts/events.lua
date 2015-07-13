@@ -62,10 +62,14 @@ end
 
 
 function CEDGameMode:OnPlayerUpdateSelectedEntindex(args)
-	print("OnPlayerUpdateSelectedEntindex")
-	local hPlayer = PlayerResource:GetPlayer(args.PlayerID)
+	print("OnPlayerUpdateSelectedEntindex =>", args.entindex)
 
-	hPlayer.__selectedEntityIndex = args.entindex
+	local id = args.PlayerID
+	local idx = args.entindex
+
+	Convars.__player__selected__entindex__ = idx
+	CDOTAGamerules.__player__selected__entindex__ = idx
+
 
 	CustomGameEventManager:Send_ServerToPlayer(hPlayer, "player_update_selected_entindex", {entindex = args.entindex})
 end

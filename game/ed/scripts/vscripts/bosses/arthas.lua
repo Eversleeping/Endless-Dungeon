@@ -37,7 +37,7 @@ function ArthasAIThink( boss )
 	local hp = boss:GetHealth() / boss:GetMaxHealth()
 	local function SetPhase( phase )
 		if boss.currentPhase ~= phase then
-			if _G["OnEnterPhase_" .. phase ] then _G["OnEnterPhase_" .. phase ] end
+			if _G["OnEnterPhase_" .. phase ] then _G["OnEnterPhase_" .. phase ](boss) end
 			boss.currentPhase = phase
 		end
 	end
@@ -56,7 +56,6 @@ end
 CBossManager:RegisterBoss("boss_arthas", true ) -- boss name, is playable, give nil if it's not playable
 
 require("ai.ai_basic")
-require("ai.boss_phases")
 
 function Spawn(kv)
 	print("BossArthas spawned, ->", thisEntity)

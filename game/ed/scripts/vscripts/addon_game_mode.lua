@@ -65,6 +65,7 @@ function CEDGameMode:InitGameMode()
 	self._tPlayerHeroInitialized = {}
 	self.__enemiesInFight = {}
 	self.nCountDown = -1
+	GameRules.PlayerSelectedTarget = {}
 
 	for i = 0, DOTA_MAX_PLAYERS do
 		PlayerResource:SetCustomTeamAssignment( i, 2 ) -- put each player on Radiant team
@@ -88,7 +89,6 @@ function CEDGameMode:InitGameMode()
 			CustomGameEventManager:Send_ServerToAllClients("fight_end", {})
 			self.__inFight = false
 		else
-			print("Fight detector , enemies in fight counts => ", TableCount(self.__enemiesInFight))
 			self.__inFight = false
 		end
 		if TableCount(self.__enemiesInFight) > 0 then
