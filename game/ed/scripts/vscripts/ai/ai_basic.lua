@@ -13,18 +13,24 @@ function AIBASIC:init( unit )
 	-- 当单位开始进入战斗
 	--=================================================================
 	function unit.OnStartFight()
+		for i = 1,unit:GetModifierCount() do
+			local modifier = unit:GetModifierNameByIndex(i)
+			if modifier then
+				print("ON START FIGHT => MODIFIER FOUND!, IT'S ->",modifier,"  >removed< ")
+				unit:RemoveModifierByName(modifier)
+			end
+		end
 		print(unit:GetUnitName(), "-> start fight against you ~ ~ ~")
 	end
 
 	--=================================================================
 	-- 切换攻击目标
 	--=================================================================
-	function unit.OnChangeAttackTarget()
-		local maxHatredTarget = unit:GetMaxHatredTarget()
-		if not maxHatredTarget then return end
+	function unit:ChangeAttackTarget( t )
+		if not t and IsValidEntity(t) and t:IsAlive() then return end
 
-		print("UNIT ",unit:GetUnitName()," CHANGE ATTACK TARGET from ", unit:GetAggroTarget() ,"=>", maxHatredTarget:GetUnitName())
-		unit:MoveToTargetToAttack( maxHatredTarget )
+		print("UNIT ",unit:GetUnitName()," CHANGE ATTACK TARGET from ", unit:GetAggroTarget() ,"=>", t:GetUnitName())
+		unit:MoveToTargetToAttack( t )
 	end
 
 	--=================================================================
@@ -37,11 +43,13 @@ function AIBASIC:init( unit )
 		unit:Stop()
 
 		unit:SetContextThink(DoUniqueString("return_checker"),function()
+			-- 如果距离不够，那么继续往出生点走
 			if ( unit:GetAbsOrigin() - unit.spawnLocation ):Length2D() >= 50 then
 				unit:MoveToPosition(unit.spawnLocation)
 				return 0.1
 			end
 
+			-- 初始化各种状态
 			local ar = unit:GetAcquisitionRange()
 			unit:SetAcquisitionRange(0)
 			unit:Stop()
@@ -62,8 +70,8 @@ function AIBASIC:init( unit )
 					unit:RemoveModifierByName(modifier)
 				end
 			end
+			unit:SetAcquisitionRange(ar)
 			HATRED:init(unit)
-
 			return nil
 		end,0)
 	end
@@ -98,10 +106,11 @@ function AIBASIC:init( unit )
 
 		if ( unit:GetAbsOrigin() - unit.spawnLocation ):Length2D() > MAX_ROARM_DISTANCE then
 			unit.__fsm__:fire("on_go_too_far")
-			return 2
+			return 1
 		end
 
-		if unit:GetMaxHatredTarget() and aggroUnit ~= unit:GetMaxHatredTarget() then
+		local maxHatredTarget =  unit:GetMaxHatredTarget()
+		if unit:GetMaxHatredTarget() and aggroUnit ~= maxHatredTarget then
 			local isChanneling = false
 			for i = 0, 15 do
 				local ab = unit:GetAbilityByIndex(i)
@@ -109,11 +118,10 @@ function AIBASIC:init( unit )
 					if ab:IsChanneling() then isChanneling = true end
 				end
 			end
-			if isChanneling then
-				return 0.1
+			if ( not isChanneling ) and ( unit:GetHatred(maxHatredTarget)  / unit:GetHatred(aggroUnit)  > 1.3 ) then
+				unit:ChangeAttackTarget( maxHatredTarget )
 			end
-			unit.__fsm__:fire("on_change_aggro_target")
-			return 2
+			return 0.1
 		end
 
 		if aggroUnit ~= nil then
@@ -139,6 +147,7 @@ function AIBASIC:init( unit )
 	-- init fsm
 	unit.__fsm__ = FSM:new(unit, {
 		{"waiting","on_hurt","state_fighting", unit.OnStartFight},
+		{"waiting","on_trigger_fight_start","state_fighting", unit.OnStartFight},
 		{"*","on_change_aggro_target","state_fighting", unit.OnChangeAttackTarget},
 		{"*","on_found_no_enemies","state_return",unit.OnBeginReturn},
 		{"*","on_go_too_far","state_return", unit.OnBeginReturn},

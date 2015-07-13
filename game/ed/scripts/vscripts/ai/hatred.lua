@@ -69,5 +69,4 @@ function HATRED:init(unit)
 	end
 
 
-
 end
