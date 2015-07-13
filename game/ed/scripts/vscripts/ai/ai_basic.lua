@@ -155,7 +155,7 @@ function Spawn( entityKeyValues, thisEntity )
 	AIBASIC:init( thisEntity )
 end
 
--- 如果单位在自身AI之外，还需要其他AI，那么在他的SpawnAI中调用AIBASIC_InternalSpawn( thisEntity )
-function InternalSpawn(e)
-	AIBASIC:init( thisEntity )
+-- 如果单位在自身AI之外，还需要其他AI，那么在他的SpawnAI中调用 AIBASIC_InternalSpawn( thisEntity )
+function AIBASIC_InternalSpawn(e)
+	AIBASIC:init( e )
 end
