@@ -11,9 +11,7 @@ LinkLuaModifier( "lm_damage_tracker", LUA_MODIFIER_MOTION_NONE )
 if _G.HATRED == nil then _G.HATRED = {} end
 
 function HATRED:init(unit)
-
 	print("initing hatred for unit", unit:GetUnitName())
-
 	unit.hatred = {}
 
 	if not unit:HasModifier("lm_damage_tracker") then
@@ -68,5 +66,38 @@ function HATRED:init(unit)
 		return TableFindKey(unit.hatred, m)
 	end
 
+	function unit:GetHatredByIndex( idx )
+		local t = {}
+		for k, v in pairs(unit.hatred) do
+			if ( (not IsValidEntity(k)) or (not  k:IsAlive() ) ) then
+				unit.hatred[k] = nil
+			else
+				table.insert(t, v)
+			end
+		end
+		table.sort(t, function(a,b) return a > b end)
+		local hbi = t[idx]
+		if hbi then
+			return TableFindKey(unit.hatred, hbi)
+		end
 
+		return nil
+	end
+
+	function unit:GetMinHatredTarget()
+		local t = {}
+		for k, v in pairs(unit.hatred) do
+			if ( (not IsValidEntity(k)) or (not  k:IsAlive() ) ) then
+				unit.hatred[k] = nil
+			else
+				table.insert(t, v)
+			end
+		end
+		table.sort(t)
+		local hbi = t[1]
+		if hbi then
+			return TableFindKey(unit.hatred, hbi)
+		end
+		return nil
+	end
 end

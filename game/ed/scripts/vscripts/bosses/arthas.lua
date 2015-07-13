@@ -1,69 +1,76 @@
-
-local AI = {} AI.n = {}
-
-function AI.n.waiting( boss )
+function ArthasPhaseThink_1( boss )
 end
 
-function AI.n.phase1( boss )
-	return 0.1
+function ArthasPhaseThink_2( boss )
 end
 
-function AI.n.phase12( boss )
-	
-	return 0.1
+function ArthasPhaseThink_3( boss )
 end
 
-function AI.n.phase2( boss )
-	return 0.1
-end
-
-function AI.n.phase23( boss )
+function OnEnterPhase_1( boss )
 
 end
 
-function AI.n.phase3( boss )
-
+function OnEnterPhase_2( boss )
 end
 
-function OnFightStart( boss )
-
+function OnEnterPhase_3( boss )
 end
 
-function OnEnterPhase12( boss )
-
+function OnEnterPhase_4( boss )
 end
 
-function OnEnterPhase2( boss )
+function ArthasAIThink( boss )
+	if not IsValidEntity(boss) then
+		return nil
+	end
+	if not boss:IsAlive() then
+		-- TODO : fire game events to tell arthas was killed
+		return nil
+	end
 
-end
+	if boss.__fsm__:get() ~= "AIBASIC_STATE_fighting" then
+		return 0.1
+	end
 
-function OnEnterPhase23( boss )
-
-end
-
-function OnEnterPhase3( boss )
-
-end
-
-AI.h = AI.n
-
-function CheckBossState( boss )
-	if not IsValidEntity(boss) then return nil end
-	if not boss:IsAlive() then return nil end
-	
+	-- 基于血量的状态转换
 	local hp = boss:GetHealth() / boss:GetMaxHealth()
-	if hp < 0.7 then boss.fsm:fire("on_health_below_70") return 0.1 end
-	if hp < 0.4 then boss.fsm:fire("on_health_below_40") return 0.1 end
-	if hp < 0.1 then boss.fsm:fire("on_health_below_10") return 0.1 end
+	local function SetPhase( phase )
+		if boss.currentPhase ~= phase then
+			if _G["OnEnterPhase_" .. phase ] then _G["OnEnterPhase_" .. phase ] end
+			boss.currentPhase = phase
+		end
+	end
+	if hp >= 0.7 and hp < 1 then 	SetPhase( 1 ) end
+	if hp >= 0.4 and hp < 0.7 then 	SetPhase( 2 ) end
+	if hp >= 0.1 and hp < 0.4 then 	SetPhase( 3 ) end
+	if hp < 0.1 then 			SetPhase( 4 ) end
+
+	local think = _G["ArthasPhaseThink_" .. boss.currentPhase]
+
+	if think then return think( boss ) end
+
+	return 0.1
 end
 
-print("Registering boss arthas")
-CBossManager:RegisterBoss("boss_arthas", {
-	init = function( boss , difficulty)
+CBossManager:RegisterBoss("boss_arthas", true ) -- boss name, is playable, give nil if it's not playable
+
+require("ai.ai_basic")
+require("ai.boss_phases")
+
+function Spawn(kv)
+	print("BossArthas spawned, ->", thisEntity)
+	AIBASIC_InternalSpawn( thisEntity )
+	thisEntity.currentPhase = 0
+	thisEntity:SetContextThink(DoUniqueString("arthas_ai"), function() return ArthasAIThink( thisEntity ) end, 0)
+end
+
+--[[
+init = function( boss , difficulty)
 
 		-- 初始化BOSS数据
 		boss.data = {}
-	
+
 		-- 阶段1技能 phase1
 		boss.Ability_call_xuejiangshi = boss:FindAbilityByName("arthas_call_xuejiangshi") -- 召唤蹒跚的血僵尸 1
 		boss.Ability_call_shishigui = boss:FindAbilityByName("arthas_call_shishigui") -- 召唤食尸鬼苦工 2
@@ -97,13 +104,13 @@ CBossManager:RegisterBoss("boss_arthas", {
 		})
 		boss.FSM.h = boss.FSM.n
 		boss.fsm = boss.FSM[difficulty]
-		
+
 		boss:SetContextThink(DoUniqueString("boss_ai"), function()
 			CheckBossState( boss ) -- 检测状态，脱离战斗区域，死亡等
 			return AI[difficulty][boss.FSM[difficulty]:get()] ( boss ) or 0.1
 		end, 0) --  start boss ai think
 	end
-})
+--]]
 
 --[[
 整体流程

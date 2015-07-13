@@ -20,6 +20,16 @@ function AIBASIC:init( unit )
 				unit:RemoveModifierByName(modifier)
 			end
 		end
+
+		-- 把所有敌人加入仇恨目标
+		local enemies = FindUnitsInRadius( unit:GetTeam(), unit:GetOrigin(), nil, 20000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false )
+		if #enemies > 0 then
+			for _, v in pairs(enemies) do
+				if unit:GetHatred(v) == nil then
+					unit:ModifyHatred(v, 0)
+				end
+			end
+		end
 		print(unit:GetUnitName(), "-> start fight against you ~ ~ ~")
 	end
 
@@ -146,12 +156,11 @@ function AIBASIC:init( unit )
 
 	-- init fsm
 	unit.__fsm__ = FSM:new(unit, {
-		{"waiting","on_hurt","state_fighting", unit.OnStartFight},
-		{"waiting","on_trigger_fight_start","state_fighting", unit.OnStartFight},
-		{"*","on_change_aggro_target","state_fighting", unit.OnChangeAttackTarget},
-		{"*","on_found_no_enemies","state_return",unit.OnBeginReturn},
-		{"*","on_go_too_far","state_return", unit.OnBeginReturn},
-		{"state_return","on_return_start_pos","waiting", nil}
+		{"AIBASIC_STATE_waiting","on_hurt","AIBASIC_STATE_fighting", unit.OnStartFight},
+		{"AIBASIC_STATE_waiting","on_trigger_fight_start","AIBASIC_STATE__fighting", unit.OnStartFight},
+		{"*","on_found_no_enemies","AIBASIC_STATE_return",unit.OnBeginReturn},
+		{"*","on_go_too_far","AIBASIC_STATE_return", unit.OnBeginReturn},
+		{"AIBASIC_STATE_return","on_return_start_pos","AIBASIC_STATE_waiting", nil}
 	})
 
 	-- init hatred

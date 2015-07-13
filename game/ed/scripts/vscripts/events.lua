@@ -67,17 +67,9 @@ function CEDGameMode:OnPlayerUpdateSelectedEntindex(args)
 	CustomGameEventManager:Send_ServerToPlayer(hPlayer, "player_update_selected_entindex", {entindex = args.entindex})
 end
 
+--[[
 function CEDGameMode:OnEntityKilled(args)
 	local ent = args.entindex_killed
 	local killer = args.entindex_attacker
-
-	if ent.isBoss then
-		print("A boss was killed , it called -> " .. ent:GetUnitName())
-		if CBossManager:HasNextBoss() then
-			FireGameEvent("player_slained_boss", {})
-			CustomNetTables:SetTableValue("slained_boss", ent:GetUnitName(), { difficulty = ent.difficulty })
-		else
-			GameRules:SetGameWinner(DOTA_TEAM_GOODGUYS)
-		end
-	end
 end
+--]]
