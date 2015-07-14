@@ -113,8 +113,17 @@ function SetTimer( cmdName, time )
     nCOUNTDOWNTIMER = time
 end
 
-function cd2b(d)
-
+function Dem2Bin(d)
+    local function modf(a,b)
+        return math.floor(a/b), a%b
+    end
+    local r = ""
+    local k = nil
+    while d ~= 0 do
+        d,k = modf(d,2)
+        r = k .. r
+    end
+    return r
 end
 
 function IsFacing(ea, eb)
