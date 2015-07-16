@@ -69,6 +69,12 @@ function CEDGameMode:InitGameMode()
 
 	for i = 0, DOTA_MAX_PLAYERS do
 		PlayerResource:SetCustomTeamAssignment( i, 2 ) -- put each player on Radiant team
+		if PlayerResource:IsValidPlayer(i) then 
+			local hPlayer = PlayerResource:GetPlayer(i)
+			local unit = CreateUnitByName("npc_dota_roshan", Vector(0,0,0), false, hPlayer, hPlayer, hPlayer:GetTeamNumber())
+			unit:SetControllableByPlayer(i, false)
+			PlayerResource:SetOverrideSelectionEntity(i, unit)
+		end
 		self._tPlayerHeroInitialized[ i ] = false
 		local player = PlayerResource:GetPlayer(i)
 		if player then 

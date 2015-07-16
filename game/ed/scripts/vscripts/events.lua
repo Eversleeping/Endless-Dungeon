@@ -54,10 +54,16 @@ function CEDGameMode:Think_InitializePlayerHero( hPlayerHero )
 		hPlayerHero:HeroLevelUp(false)
 		l = hPlayerHero:GetLevel()
 	end
+	
 
 	CustomGameEventManager:Send_ServerToAllClients("player_hero_first_spawn", {
 		PlayerID = nPlayerID
 	})
+	local i = nPlayerID
+		local hPlayer = PlayerResource:GetPlayer(i)
+		local unit = CreateUnitByName("npc_dota_lycan_wolf4", Vector(0,0,0), false, hPlayer, hPlayer, hPlayer:GetTeamNumber())
+		unit:SetControllableByPlayer(i, false)
+		PlayerResource:SetOverrideSelectionEntity(i, unit)
 end
 
 

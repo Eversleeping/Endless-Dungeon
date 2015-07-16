@@ -17,7 +17,7 @@
 		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_FLYOUT_SCOREBOARD, false );
 
 		// Uncomment this to remove the bottom part of the HUD
-		/**/
+		/**
 		GameUI.SetRenderBottomInsetOverride( 0 );
 		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ACTION_PANEL, false );
 		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ACTION_MINIMAP, true );
@@ -29,7 +29,7 @@
 		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_PROTECT, false );
 		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_GOLD, false );
 		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_SHOP_SUGGESTEDITEMS, false );
-		/**/
+		**/
 	</script>
 	<Panel>
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/mouse_layer.xml" />
