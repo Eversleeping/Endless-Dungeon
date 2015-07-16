@@ -66,17 +66,11 @@ function CEDGameMode:OnPlayerUpdateSelectedEntindex(args)
 
 	local id = args.PlayerID
 	local idx = args.entindex
+	local hPlayer = PlayerResource:GetPlayer(id)
+	local hero = hPlayer:GetAssignedHero()
 
-	Convars.__player__selected__entindex__ = idx
-	CDOTAGamerules.__player__selected__entindex__ = idx
-
+	GameRules.tUnitSelectedTarget = GameRules.tUnitSelectedTarget or {}
+	GameRules.tUnitSelectedTarget[hero:entindex()] = idx
 
 	CustomGameEventManager:Send_ServerToPlayer(hPlayer, "player_update_selected_entindex", {entindex = args.entindex})
 end
-
---[[
-function CEDGameMode:OnEntityKilled(args)
-	local ent = args.entindex_killed
-	local killer = args.entindex_attacker
-end
---]]
