@@ -42,6 +42,47 @@
         "AbilityUnitDamageType"             "DAMAGE_TYPE_MAGICAL"
         "ScriptFile"                        "abilities/eda_test_target_selection"
     }
+
+    "eda_im_frost_bolt"
+    {
+        "BaseClass"                         "ability_lua"
+        "AbilityTextureName"                "juggernaut_blade_dance"
+        "AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+        "AbilityUnitTargetTeam"             "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"             "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitDamageType"             "DAMAGE_TYPE_MAGICAL"
+        "ScriptFile"                        "abilities/eda_im_frost_bolt"
+
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "frost_bolt_speed"          "1000"
+            }
+            "02"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "frost_bolt_damage"         "2300"
+            }
+            "03"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "movespeed_slow"            "-30"
+            }
+            "04"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "max_range"                 "1500"
+            }
+            "05"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "frost_bolt_slow_duration"  "3.0"
+            }
+        }
+
+    }
     //=================================================================================================================
     // Juggernaut Attack
     //=================================================================================================================

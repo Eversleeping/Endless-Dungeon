@@ -3,9 +3,9 @@
 // the specified key-value combinations.  Use override_hero <hero_to_override> for this.
 "DOTAHeroes"
 {
-	"eda_hero_juggernaut"
+	"eda_ice_mage"
 	{
-		"override_hero"					"npc_dota_hero_juggernaut"			// Hero to override
-		"Ability1"						"eda_test_target_selection"						// Ability 1
+		"override_hero"					"npc_dota_hero_crystal_maiden"
+		"Ability1"						"eda_im_frost_bolt"
 	}
 }
