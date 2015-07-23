@@ -1,0 +1,11 @@
+###### WARRIOR
+〉 ROLE: T or D
+
+###### KNIGHT
+〉 ROLE: T or H
+
+###### RUNE KEEPER
+> ROLE:  D or H
+
+###### FROST MAGE
+> ROLE: D
