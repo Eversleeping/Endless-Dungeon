@@ -133,3 +133,35 @@ function IsFacing(ea, eb)
     local d = (ob - oa)
     return ( v.x * d.x + v.y * d.y ) > 0
 end
+
+function stringSplit(str, sep)
+    if type(str) ~= 'string' or type(sep) ~= 'string' then
+        return nil
+    end
+    local res_ary = {}
+    local cur = nil
+    for i = 1, #str do
+        local ch = string.byte(str, i)
+        local hit = false
+        for j = 1, #sep do
+            if ch == string.byte(sep, j) then
+                hit = true
+                break
+            end
+        end
+        if hit then
+            if cur then
+                table.insert(res_ary, cur)
+            end
+            cur = nil
+        elseif cur then
+            cur = cur .. string.char(ch)
+        else
+            cur = string.char(ch)
+        end
+    end
+    if cur then
+        table.insert(res_ary, cur)
+    end
+    return res_ary
+end
